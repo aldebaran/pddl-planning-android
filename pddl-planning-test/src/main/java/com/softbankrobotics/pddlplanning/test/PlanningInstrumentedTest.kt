@@ -44,13 +44,11 @@ interface PlanningInstrumentedTest : PlanningUnitTest {
         val (domain, problem) = domainAndProblemFromRaw(context, R.raw.sample_2)
         val initsToPlans = mutableListOf<ExpressionToTask>()
 
-        // With PDDL4J, only AStar + SUM works.
         initsToPlans.add(
             listOf<Expression>() // Nothing to say about user.
                     to listOf() // Robot has nothing to do.
         )
 
-        // Did manage to make it not work in PDDL4J.
         initsToPlans.add(
             listOf( // A user entered interaction.
                 createFact("interacting_with", "user")
@@ -60,7 +58,6 @@ interface PlanningInstrumentedTest : PlanningUnitTest {
             )
         )
 
-        // Fast-downward works fine for all these problems.
         checkPlansForInits(domain, problem, initsToPlans, searchPlan) { Log.d(logTag, it) }
     }
 
