@@ -1,0 +1,4 @@
+include ':app'
+include ':pddl-planning'
+include ':pddl-planning-test'
+rootProject.name = "pddl-planning-android"
