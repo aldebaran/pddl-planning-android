@@ -1,0 +1,36 @@
+apply plugin: 'org.jetbrains.dokka'
+
+if (project.plugins.hasPlugin('com.android.library')) {
+
+    afterEvaluate { project ->
+        task androidSourcesJar(type: Jar) {
+            classifier = 'sources'
+            from android.sourceSets.main.java.source
+        }
+
+        dokka {
+            outputFormat = 'html'
+            outputDirectory = "$buildDir/javadoc"
+
+            configuration {
+                moduleName = project.name
+
+                externalDocumentationLink {
+                    url = new URL("https://qisdk.softbankrobotics.com/sdk/doc/libqi-java/")
+                }
+
+                jdkVersion = 8
+            }
+        }
+
+        task kdocJar(type: Jar, dependsOn: dokka) {
+            from dokka.outputDirectory
+            archiveClassifier.set("javadoc")
+        }
+
+        artifacts {
+            archives androidSourcesJar
+            archives kdocJar
+        }
+    }
+}

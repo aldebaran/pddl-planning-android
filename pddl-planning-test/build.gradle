@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+apply from: "$rootDir/gradle/artifacts.gradle"
+apply from: "$rootDir/gradle/deploy.gradle"
+
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.3"
@@ -10,8 +13,7 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionName getVersion()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
