@@ -39,3 +39,7 @@ dokka {
         jdkVersion = 8
     }
 }
+
+static def getGitCommitHash() {
+    'git rev-parse --verify --short HEAD'.execute().text.trim()
+}

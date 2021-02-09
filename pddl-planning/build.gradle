@@ -10,7 +10,12 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 29
-        versionName getVersion()
+        versionName getProperty("VERSION_NAME")
+
+        // Rename the output archives to identify them at a glance.
+        String artifactId = getProperty("POM_ARTIFACT_ID")
+        String buildId = getGitCommitHash()
+        archivesBaseName = "$artifactId-$versionName-$buildId"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
