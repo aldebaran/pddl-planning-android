@@ -1,18 +1,19 @@
 apply plugin: "org.sonarqube"
 
-if (project.plugins.hasPlugin('com.android.library') ||
-        project.plugins.hasPlugin('com.android.application')) {
+if (project.plugins.hasPlugin('com.android.library') || project.plugins.hasPlugin('com.android.application')) {
 
     sonarqube {
         properties {
-            def appProjectBuildDir = project.buildDir
+            final def appProjectBuildDir = project.buildDir
+            final def sonarUrl = System.getenv('SONAR_HOST_URL')
+            final def sonarToken = System.getenv('SONAR_AUTH_TOKEN')
 
-            property 'sonar.projectKey', android.defaultConfig.applicationId
-            property 'sonar.projectName', project.name
-            property 'sonar.projectVersion', project.android.defaultConfig.versionName
+            property 'sonar.projectKey', "${POM_GROUP_ID}.${POM_ARTIFACT_ID}"
+            property 'sonar.projectName', POM_ARTIFACT_ID
+            property 'sonar.projectVersion', VERSION_NAME
 
-            property 'sonar.host.url', "${System.getenv('SONAR_HOST_URL')}"
-            property 'sonar.login', "${System.getenv('SONAR_AUTH_TOKEN')}"
+            property 'sonar.host.url', "${sonarUrl}"
+            property 'sonar.login', "${sonarToken}"
             property 'sonar.sources', 'src'
             property 'sonar.sourceEncoding', 'UTF-8'
             property 'sonar.java.binaries', 'build'
@@ -24,5 +25,4 @@ if (project.plugins.hasPlugin('com.android.library') ||
             property 'sonar.coverage.jacoco.xmlReportPaths', ["$appProjectBuildDir/reports/jacoco/fullCoverageReport/fullCoverageReport.xml"]
         }
     }
-
 }

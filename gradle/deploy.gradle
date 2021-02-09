@@ -10,19 +10,19 @@ afterEvaluate { project ->
         repositories {
             mavenDeployer {
                 if (isExperimentalBuild()) {
+                    println "Deploying to ${System.getenv('NEXUS_EXPERIMENTAL_REPO_URL')}"
                     repository(url: "${System.getenv('NEXUS_EXPERIMENTAL_REPO_URL')}") {
-                        println "Deploying to EXPERIMENTAL repository"
                         authentication(userName: "${System.properties['NEXUS_USER']}",
                                 password: "${System.properties['NEXUS_PASSWORD']}")
                     }
                 } else {
+                    println "Deploying to ${System.getenv('NEXUS_DEV_RELEASES_REPO_URL')}"
                     repository(url: "${System.getenv('NEXUS_DEV_RELEASES_REPO_URL')}") {
-                        println "Deploying to RELEASE repository"
                         authentication(userName: "${System.properties['NEXUS_USER']}",
                                 password: "${System.properties['NEXUS_PASSWORD']}")
                     }
+                    println "Deploying to ${System.getenv('NEXUS_DEV_SNAPSHOTS_REPO_URL')}"
                     snapshotRepository(url: "${System.getenv('NEXUS_DEV_SNAPSHOTS_REPO_URL')}") {
-                        println "Deploying to SNAPSHOT repository"
                         authentication(userName: "${System.properties['NEXUS_USER']}",
                                 password: "${System.properties['NEXUS_PASSWORD']}")
                     }
@@ -37,7 +37,6 @@ afterEvaluate { project ->
                         if (dep.groupId.contains(rootProject.name)) {
                             dep.groupId = POM_GROUP_ID
                         }
-                        println "POM is configured"
                     }
                 }
             }

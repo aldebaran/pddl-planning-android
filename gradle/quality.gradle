@@ -1,5 +1,2 @@
-apply from: "$rootDir/gradle/config/coverage/coverage.gradle"
-apply from: "$rootDir/gradle/config/checkstyle/checkstyle.gradle"
-if (System.getenv('mode') != null) {
-    apply from: "$rootDir/gradle/config/sonarqube/sonarqube.gradle"
-}
+apply from: "$rootDir/gradle/quality/coverage.gradle"
+apply from: "$rootDir/gradle/quality/sonarqube.gradle"

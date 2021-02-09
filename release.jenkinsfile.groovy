@@ -1,6 +1,11 @@
 @Library('pipeline-library') _
 
-String DEVELOP_BRANCH = 'develop'
+import com.softbankrobotics.pipeline.ArchiveType
+import com.softbankrobotics.pipeline.VersionType
+
+def MASTER_BRANCH = 'master'
+def EXPERIMENTAL_BRANCH = 'experimental-'
+def DEVELOP_BRANCH = 'develop'
 
 node("android-build-jdk8") {
 
@@ -21,22 +26,40 @@ node("android-build-jdk8") {
         }
     }
 
-    stage('Upload AARs to Nexus') {
-        if (env.BRANCH_NAME == "develop") {
-            BUILD_TYPE = "SNAPSHOT"
-        } else {
-            BUILD_TYPE = "RELEASE"
-        }
-        echo "BUILD_TYPE=$BUILD_TYPE"
+    stage('Upload AAR and Javadoc website ZIP to Nexus') {
+        sh 'git rev-parse --abbrev-ref HEAD > branch_name'
+        String BRANCH_NAME = readFile 'branch_name'
+        if (BRANCH_NAME.startsWith(EXPERIMENTAL_BRANCH)) {
+            withCredentials([usernamePassword(
+                    credentialsId: 'nexusDeployerAccount',
+                    passwordVariable: 'NEXUS_PASSWORD',
+                    usernameVariable: 'NEXUS_USER'
+            )]) { sh "./gradlew -DNEXUS_PASSWORD=$NEXUS_PASSWORD -DNEXUS_USER=$NEXUS_USER -DBUILD=EXPERIMENTAL uploadArchives" }
 
-        echo 'Entering credentials context...'
-        withCredentials([
-                usernamePassword(credentialsId: 'nexusDeployerAccount',
+        } else {
+            withNexus {
+                if (BRANCH_NAME == DEVELOP_BRANCH) {
+                    BUILD_TYPE = "SNAPSHOT"
+                } else {
+                    BUILD_TYPE = "RELEASE"
+                }
+
+                withCredentials([usernamePassword(
+                        credentialsId: 'nexusDeployerAccount',
                         passwordVariable: 'NEXUS_PASSWORD',
-                        usernameVariable: 'NEXUS_USER')
-        ]) {
-            echo 'Now in credentials context.'
-            sh "./gradlew -DNEXUS_PASSWORD=$NEXUS_PASSWORD -DNEXUS_USER=$NEXUS_USER -DBUILD=$BUILD_TYPE uploadArchives"
+                        usernameVariable: 'NEXUS_USER'
+                )]) { sh "./gradlew -DNEXUS_PASSWORD=$NEXUS_PASSWORD -DNEXUS_USER=$NEXUS_USER -DBUILD=$BUILD_TYPE uploadArchives" }
+
+                String versionName = sh(script: "cat gradle.properties | grep VERSION_NAME | awk -F= '{print \$2}'", returnStdout: true).trim()
+
+                def versionType = VersionType.SNAPSHOT
+                if (BRANCH_NAME == MASTER_BRANCH) {
+                    versionType = VersionType.RELEASE
+                }
+
+                def path = archiveClassifier2(ArchiveType.DOC, "pddl-planning-javadoc", versionName, "zip", versionType)
+                uploadArchive "build/website/javadoc-website.zip", env.NEXUS_URL, path
+            }
         }
     }
 
