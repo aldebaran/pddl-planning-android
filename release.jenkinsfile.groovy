@@ -17,7 +17,9 @@ node("android-build-jdk8") {
     }
 
     stage('Quality') {
-        if (env.BRANCH_NAME == DEVELOP_BRANCH) {
+        sh 'git rev-parse --abbrev-ref HEAD > branch_name'
+        String BRANCH_NAME = readFile 'branch_name'
+        if (BRANCH_NAME == DEVELOP_BRANCH) {
             withSonarQubeEnv('sonar') { sh "./gradlew fullCoverageReport sonarqube" }
         } else {
             echo "INFO: Skipping Quality check if not on develop branch..."
@@ -25,8 +27,9 @@ node("android-build-jdk8") {
     }
 
     stage('Upload AAR and Javadoc website ZIP to Nexus') {
-
-        if (env.BRANCH_NAME.startsWith(EXPERIMENTAL_BRANCH)) {
+        sh 'git rev-parse --abbrev-ref HEAD > branch_name'
+        String BRANCH_NAME = readFile 'branch_name'
+        if (BRANCH_NAME.startsWith(EXPERIMENTAL_BRANCH)) {
             withCredentials([usernamePassword(
                     credentialsId: 'nexusDeployerAccount',
                     passwordVariable: 'NEXUS_PASSWORD',
@@ -35,7 +38,7 @@ node("android-build-jdk8") {
 
         } else {
             withNexus {
-                if (env.BRANCH_NAME == DEVELOP_BRANCH) {
+                if (BRANCH_NAME == DEVELOP_BRANCH) {
                     BUILD_TYPE = "SNAPSHOT"
                 } else {
                     BUILD_TYPE = "RELEASE"
@@ -50,7 +53,7 @@ node("android-build-jdk8") {
                 String versionName = sh(script: "cat gradle.properties | grep VERSION_NAME | awk -F= '{print \$2}'", returnStdout: true).trim()
 
                 def versionType = VersionType.SNAPSHOT
-                if (env.BRANCH_NAME == MASTER_BRANCH) {
+                if (BRANCH_NAME == MASTER_BRANCH) {
                     versionType = VersionType.RELEASE
                 }
 
