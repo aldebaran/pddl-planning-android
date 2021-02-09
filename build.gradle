@@ -40,6 +40,14 @@ dokka {
     }
 }
 
+task generateJavadocWebsiteZip(type: Zip, dependsOn: dokka) {
+    from dokka.outputDirectory
+    archiveClassifier.set("website")
+
+    archiveFileName = "javadoc-website.zip"
+    destinationDirectory = file("$buildDir/website")
+}
+
 static def getGitCommitHash() {
     'git rev-parse --verify --short HEAD'.execute().text.trim()
 }
