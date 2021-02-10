@@ -4,6 +4,7 @@ import com.softbankrobotics.pddlplanning.PlanSearchFunction
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
@@ -205,6 +206,6 @@ interface PlanningUnitTest {
                 "        ))\n" +
                 "    )"
 
-        assertFalse(runBlocking { searchPlan(domain, problem) { println(it) }}.isNullOrEmpty())
+        assertTrue(runBlocking { searchPlan(domain, problem) { println(it) } }.isEmpty())
     }
 }
