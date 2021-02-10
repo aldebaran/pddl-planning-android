@@ -1,7 +1,7 @@
 package com.softbankrobotics.pddlplanning.test
 
 import com.softbankrobotics.pddlplanning.PlanSearchFunction
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 
 /**
@@ -10,7 +10,7 @@ import io.mockk.mockk
  */
 class ExamplePlanningUnitTest : PlanningUnitTest {
     private val searchPlanMock = mockk<PlanSearchFunction>().also {
-        every { it.invoke(any(), any(), any()) } returns listOf()
+        coEvery { it.invoke(any(), any(), any()) } returns listOf()
     }
     override val searchPlan: PlanSearchFunction = searchPlanMock
 }

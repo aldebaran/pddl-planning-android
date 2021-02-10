@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.softbankrobotics.pddlplanning.PlanSearchFunction
-import io.mockk.every
+import io.mockk.coEvery
 import io.mockk.mockk
 import org.junit.runner.RunWith
 
@@ -20,7 +20,7 @@ class ExamplePlanningInstrumentedTest : PlanningInstrumentedTest {
     override val context: Context
         get() = InstrumentationRegistry.getInstrumentation().targetContext
     private val searchPlanMock = mockk<PlanSearchFunction>().also {
-        every { it.invoke(any(), any(), any()) } returns listOf()
+        coEvery { it.invoke(any(), any(), any()) } returns listOf()
     }
     override val searchPlan: PlanSearchFunction = searchPlanMock
 }
