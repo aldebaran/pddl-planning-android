@@ -3,10 +3,11 @@ package com.softbankrobotics.pddlplanning.test
 import android.content.Context
 import android.util.Log
 import com.example.pddl_planning_test.R
-import com.softbankrobotics.pddlplanning.ontology.Expression
-import com.softbankrobotics.pddlplanning.ontology.Task
-import com.softbankrobotics.pddlplanning.ontology.Tasks
-import com.softbankrobotics.pddlplanning.ontology.createFact
+import com.softbankrobotics.pddlplanning.Expression
+import com.softbankrobotics.pddlplanning.Task
+import com.softbankrobotics.pddlplanning.Tasks
+import com.softbankrobotics.pddlplanning.createFact
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -35,7 +36,7 @@ interface PlanningInstrumentedTest : PlanningUnitTest {
     fun plannerSanityCheck() {
         val (domain, problem) = domainAndProblemFromRaw(context, R.raw.sample_1)
         val expectedPlan = listOf(Task("ask"))
-        val plan = searchPlan(domain, problem) { Log.d(logTag, it) }
+        val plan = runBlocking { searchPlan(domain, problem) { Log.d(logTag, it) } }
         assertEquals(expectedPlan, plan)
     }
 
@@ -58,7 +59,7 @@ interface PlanningInstrumentedTest : PlanningUnitTest {
             )
         )
 
-        checkPlansForInits(domain, problem, initsToPlans, searchPlan) { Log.d(logTag, it) }
+        runBlocking { checkPlansForInits(domain, problem, initsToPlans, searchPlan) { Log.d(logTag, it) } }
     }
 
     @Test

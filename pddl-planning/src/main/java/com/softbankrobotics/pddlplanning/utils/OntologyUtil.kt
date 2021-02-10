@@ -1,7 +1,7 @@
 package com.softbankrobotics.pddlplanning.utils
 
 import com.softbankrobotics.pddlplanning.LogFunction
-import com.softbankrobotics.pddlplanning.ontology.*
+import com.softbankrobotics.pddlplanning.*
 
 /**
  * Check whether a fact involves the given instance.

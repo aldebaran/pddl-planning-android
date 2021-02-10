@@ -1,8 +1,8 @@
 package com.softbankrobotics.pddlplanning
 
-import com.softbankrobotics.pddlplanning.ontology.Fact
-import com.softbankrobotics.pddlplanning.ontology.Goal
-import com.softbankrobotics.pddlplanning.ontology.Instance
+import com.softbankrobotics.pddlplanning.Fact
+import com.softbankrobotics.pddlplanning.Goal
+import com.softbankrobotics.pddlplanning.Instance
 
 
 /** Checks that the character at the given position is '('. */

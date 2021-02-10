@@ -3,10 +3,11 @@ package com.softbankrobotics.pddlplanning.test
 import android.content.Context
 import com.softbankrobotics.pddlplanning.LogFunction
 import com.softbankrobotics.pddlplanning.PlanSearchFunction
-import com.softbankrobotics.pddlplanning.ontology.Expression
-import com.softbankrobotics.pddlplanning.ontology.Tasks
+import com.softbankrobotics.pddlplanning.Expression
+import com.softbankrobotics.pddlplanning.Tasks
 import com.softbankrobotics.pddlplanning.splitDomainAndProblem
 import com.softbankrobotics.pddlplanning.utils.searchPlanForInit
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 
 
@@ -14,7 +15,7 @@ import org.junit.Assert
  * Checks whether the right plan is found for a given init in a problem.
  * Note that it replaces the init of the problem.
  */
-fun checkPlanForInit(
+suspend fun checkPlanForInit(
     domain: String,
     problem: String,
     init: Collection<Expression>,
@@ -31,7 +32,7 @@ fun checkPlanForInit(
  * Note that it replaces the init of the problem all along.
  * The problem ends up with the last init.
  */
-fun checkPlansForInits(
+suspend fun checkPlansForInits(
     domain: String, problem: String,
     initsToExpectedPlans: ExpressionsToTasks,
     searchPlan: PlanSearchFunction,
@@ -61,7 +62,7 @@ fun searchPlanAndPrint(
 ) {
     val pddl = stringFromRawResourceName(context, resourceName)
     val (domain, problem) = splitDomainAndProblem(pddl)
-    val plan = searchPlan(domain, problem, logFunction)
+    val plan = runBlocking { searchPlan(domain, problem, logFunction) }
     logFunction("Plan: $plan")
 }
 

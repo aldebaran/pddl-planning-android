@@ -2,7 +2,7 @@ package com.softbankrobotics.pddlplanning.utils
 
 import com.softbankrobotics.pddlplanning.LogFunction
 import com.softbankrobotics.pddlplanning.PlanSearchFunction
-import com.softbankrobotics.pddlplanning.ontology.*
+import com.softbankrobotics.pddlplanning.*
 import com.softbankrobotics.pddlplanning.replaceInit
 
 fun createDomain(
@@ -86,7 +86,7 @@ fun createProblem(
     } + "\n(:metric minimize (total-cost)))"
 }
 
-fun searchPlanForInit(
+suspend fun searchPlanForInit(
     domain: String,
     problem: String,
     init: Facts,

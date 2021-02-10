@@ -1,6 +1,7 @@
 package com.softbankrobotics.pddlplanning.test
 
 import com.softbankrobotics.pddlplanning.PlanSearchFunction
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -82,7 +83,7 @@ interface PlanningUnitTest {
                 ")\n" +
                 ")\n" +
                 ")"
-        val plan = searchPlan(domain, problem) { println(it) }
+        val plan = runBlocking { searchPlan(domain, problem) { println(it) } }
         Assert.assertNotNull(plan)
         println("Plan found:\n${plan.joinToString()}")
         Assert.assertTrue(plan.isNotEmpty())
@@ -204,6 +205,6 @@ interface PlanningUnitTest {
                 "        ))\n" +
                 "    )"
 
-        assertFalse(searchPlan(domain, problem) { println(it) }.isNullOrEmpty())
+        assertFalse(runBlocking { searchPlan(domain, problem) { println(it) }}.isNullOrEmpty())
     }
 }

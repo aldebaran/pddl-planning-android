@@ -1,4 +1,4 @@
-package com.softbankrobotics.pddlplanning.ontology
+package com.softbankrobotics.pddlplanning
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -206,6 +206,11 @@ fun or(vararg args: Expression) =
     )
 
 // Manipulating costs
+/**
+ * total_cost is a PDDL function usually found in various planners, as a unique measure of optimality.
+ */
+val total_cost = Expression("total-cost")
+
 const val assignment_operator_name = "="
 const val increase_operator_name = "increase"
 fun assign(numericFluent: Expression, amount: Int) =

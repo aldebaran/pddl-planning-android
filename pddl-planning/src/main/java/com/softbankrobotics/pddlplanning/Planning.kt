@@ -1,12 +1,11 @@
 package com.softbankrobotics.pddlplanning
 
-import com.softbankrobotics.pddlplanning.ontology.*
 import com.softbankrobotics.pddlplanning.utils.*
 
 typealias LogFunction = (String) -> Unit
-typealias PlanSearchFunction = (String, String, LogFunction?) -> Tasks
+typealias PlanSearchFunction = suspend (String, String, LogFunction?) -> Tasks
 
-fun adaptProblemAndSearchPlan(
+suspend fun adaptProblemAndSearchPlan(
     domain: String,
     problemBase: String,
     objects: Iterable<Instance>,
@@ -26,7 +25,7 @@ fun adaptProblemAndSearchPlan(
     return plan
 }
 
-fun adaptProblemAndSearchPlan(
+suspend fun adaptProblemAndSearchPlan(
     domain: String,
     problemBase: String,
     objects: Iterable<Instance>,
@@ -44,7 +43,7 @@ fun adaptProblemAndSearchPlan(
 /**
  * Search plan using PDDL Ontology.
  */
-fun searchPlan(
+suspend fun searchPlan(
     types: Collection<Type>,
     constants: Collection<Instance>,
     predicates: Collection<Expression>,
@@ -64,7 +63,7 @@ fun searchPlan(
 /**
  * Check problems in PDDL before searching plan using PDDL Ontology.
  */
-fun checkProblemAndSearchPlan(
+suspend fun checkProblemAndSearchPlan(
     types: Collection<Type>,
     constants: Collection<Instance>,
     predicates: Collection<Expression>,
