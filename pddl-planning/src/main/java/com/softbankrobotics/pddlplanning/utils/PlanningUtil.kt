@@ -31,10 +31,7 @@ fun createDomain(
     val constantTypeToNames = mutableMapOf<Type, MutableList<String>>()
     val constantNamesWithNoType = mutableListOf<String>()
     for (constant in constants) {
-        if (constant.type != null)
-            constantTypeToNames.getOrPut(constant.type!!, { mutableListOf() }).add(constant.name)
-        else
-            constantNamesWithNoType.add(constant.name)
+        constantTypeToNames.getOrPut(constant.type, { mutableListOf() }).add(constant.name)
     }
     domain += "(:constants\n"
     for (instanceType in constantTypeToNames) {
