@@ -56,6 +56,17 @@ suspend fun createPlanSearchFunctionFromService(
 
     return { domain: String, problem: String, log: LogFunction? ->
         val plannerService = waitForPlannerService()
-        plannerService.searchPlan(domain, problem)
+        if (log != null)
+            log("Planner service is ready, searching for a plan...")
+        val start = System.nanoTime()
+        try {
+            plannerService.searchPlan(domain, problem)
+        } finally {
+            if (log != null) {
+                val durationMs = (System.nanoTime() - start) / 1_000_000
+                log("Plan search took $durationMs ms")
+            }
+        }
+
     }
 }
