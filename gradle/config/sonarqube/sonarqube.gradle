@@ -8,7 +8,7 @@ if (project.plugins.hasPlugin('com.android.library') ||
             def appProjectBuildDir = project.buildDir
 
             property 'sonar.projectKey', android.defaultConfig.applicationId
-            property 'sonar.projectName', project.name
+            property 'sonar.projectName', "qisdk-android-" + project.name
             property 'sonar.projectVersion', project.android.defaultConfig.versionName
 
             property 'sonar.host.url', "${System.getenv('SONAR_HOST_URL')}"
