@@ -1,11 +1,7 @@
 package com.softbankrobotics.pddlplanning.test
 
 import android.content.Context
-import com.softbankrobotics.pddlplanning.LogFunction
-import com.softbankrobotics.pddlplanning.PlanSearchFunction
-import com.softbankrobotics.pddlplanning.Expression
-import com.softbankrobotics.pddlplanning.Tasks
-import com.softbankrobotics.pddlplanning.splitDomainAndProblem
+import com.softbankrobotics.pddlplanning.*
 import com.softbankrobotics.pddlplanning.utils.searchPlanForInit
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -64,6 +60,21 @@ fun searchPlanAndPrint(
     val (domain, problem) = splitDomainAndProblem(pddl)
     val plan = runBlocking { searchPlan(domain, problem, logFunction) }
     logFunction("Plan: $plan")
+}
+
+/**
+ * Loads a domain & problem from a raw resources, and runs a planning function on it.
+ * The result plan is returned.
+ */
+fun searchPlanFromResource(
+    context: Context,
+    resource: Int,
+    searchPlan: PlanSearchFunction,
+    logFunction: LogFunction
+): List<Task> {
+    val pddl = stringFromRawResource(context, resource)
+    val (domain, problem) = splitDomainAndProblem(pddl)
+    return runBlocking { searchPlan(domain, problem, logFunction) }
 }
 
 /**

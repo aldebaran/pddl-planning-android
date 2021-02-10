@@ -9,6 +9,7 @@ import com.softbankrobotics.pddlplanning.Tasks
 import com.softbankrobotics.pddlplanning.createFact
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 
 typealias ExpressionToTask = Pair<Collection<Expression>, Tasks>
@@ -64,71 +65,140 @@ interface PlanningInstrumentedTest : PlanningUnitTest {
 
     @Test
     fun baseExample() {
-        searchPlanAndPrint(context, "example_base", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_base)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("joke_with", "alice"),
+                Task.create("joke_with", "bob")
+            )
+        )
     }
 
     @Test
     fun aliceIsAlreadyHappy() {
-        searchPlanAndPrint(context, "example_alice_happy", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_alice_happy)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("joke_with", "bob")
+            )
+        )
     }
 
     @Test
     fun everybodyIsHappy() {
-        searchPlanAndPrint(context, "example_alice_happy", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_everybody_happy)
+        assertEquals(
+            plan,
+            listOf<Task>()
+        )
     }
 
     @Test
     fun nobodyAroundError() {
-        searchPlanAndPrint(context, "example_nobody_around_error", searchPlan, ::logDebug)
+        assertThrows(Throwable::class.java) {
+            searchPlanFromResource(R.raw.example_nobody_around_error)
+        }
     }
 
     @Test
     fun nobodyAroundConditionalGoal() {
-        searchPlanAndPrint(
-            context,
-            "example_nobody_around_conditional_goal",
-            searchPlan,
-            ::logDebug
+        val plan = searchPlanFromResource(R.raw.example_nobody_around_conditional_goal)
+        assertEquals(
+            plan,
+            listOf<Task>()
         )
     }
 
     @Test
     fun aliceIsAroundConditionalGoal() {
-        searchPlanAndPrint(context, "example_alice_around_conditional_goal", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_alice_around_conditional_goal)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("joke_with", "alice")
+            )
+        )
     }
 
     @Test
     fun intrinsicAbsence() {
-        searchPlanAndPrint(context, "example_intrinsic_absence", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_intrinsic_absence)
+        assertEquals(plan, listOf(Task.create("joke_with", "alice")))
     }
 
     @Test
     fun nonDeterministic() {
-        searchPlanAndPrint(context, "example_non_deterministic", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_non_deterministic)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("find_human", "alice"),
+                Task.create("find_human", "bob"),
+                Task.create("joke_with", "bob"),
+                Task.create("joke_with", "alice")
+            )
+        )
     }
 
     @Test
     fun partialObservability() {
-        searchPlanAndPrint(context, "example_partial_observability", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_partial_observability)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("find_human", "alice"),
+                Task.create("find_human", "bob"),
+                Task.create("joke_with", "bob"),
+                Task.create("joke_with", "alice")
+            )
+        )
     }
 
     @Test
     fun partialObservabilityNext() {
-        searchPlanAndPrint(context, "example_partial_observability_next", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_partial_observability_next)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("find_human", "bob"),
+                Task.create("joke_with", "bob")
+            )
+        )
     }
 
     @Test
     fun objectDiscoveryNobody() {
-        searchPlanAndPrint(context, "example_object_discovery_nobody", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_object_discovery_nobody)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("find_human", "someone"),
+                Task.create("joke_with", "someone")
+            )
+        )
     }
 
     @Test
     fun objectDiscovery() {
-        searchPlanAndPrint(context, "example_object_discovery", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_object_discovery)
+        assertEquals(
+            plan,
+            listOf(
+                Task.create("find_human", "alice"),
+                Task.create("joke_with", "alice")
+            )
+        )
     }
 
     @Test
     fun objectDiscoveryNext() {
-        searchPlanAndPrint(context, "example_object_discovery_next", searchPlan, ::logDebug)
+        val plan = searchPlanFromResource(R.raw.example_object_discovery_next)
+        assertEquals(plan, listOf(Task.create("joke_with", "charles")))
+    }
+
+    private fun searchPlanFromResource(resource: Int): List<Task> {
+        return searchPlanFromResource(context, resource, searchPlan, ::logDebug)
     }
 }
