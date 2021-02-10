@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+apply from: "$rootDir/gradle/artifacts.gradle"
+apply from: "$rootDir/gradle/deploy.gradle"
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
