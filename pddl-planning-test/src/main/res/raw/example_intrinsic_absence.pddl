@@ -19,7 +19,7 @@
 
    (:objects
       alice - human
-      neutral happy sad - emotion)
+   )
 
    (:init
       (feels alice neutral))

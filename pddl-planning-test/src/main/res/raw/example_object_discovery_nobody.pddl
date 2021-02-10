@@ -26,7 +26,7 @@
 
    (:objects
       someone - human
-      neutral happy sad - emotion)
+   )
 
    (:init)
 

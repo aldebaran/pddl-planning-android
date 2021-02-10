@@ -26,7 +26,7 @@
 
    (:objects
       alice bob - human
-      neutral happy sad - emotion)
+   )
 
    (:init
       (feels alice neutral)

@@ -26,7 +26,7 @@
 
    (:objects
       alice bob charles someone - human
-      neutral happy sad - emotion)
+   )
 
    (:init
       (is_around charles)

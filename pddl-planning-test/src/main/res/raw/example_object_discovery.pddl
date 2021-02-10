@@ -26,7 +26,7 @@
 
    (:objects
       alice bob someone - human
-      neutral happy sad - emotion)
+   )
 
    (:init
       (not_found alice) (feels alice neutral)

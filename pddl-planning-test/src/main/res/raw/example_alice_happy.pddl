@@ -20,7 +20,7 @@
 
    (:objects
       alice bob - human
-      neutral happy sad - emotion)
+   )
 
    (:init
       (is_around alice) (feels alice happy)
