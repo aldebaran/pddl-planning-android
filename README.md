@@ -52,4 +52,4 @@ However there are much fewer tests with this interface.
 
 ## License
 
-This project is distributed under the BSD-3 license.
+This project is distributed under the [BSD-3 license](LICENSE).
