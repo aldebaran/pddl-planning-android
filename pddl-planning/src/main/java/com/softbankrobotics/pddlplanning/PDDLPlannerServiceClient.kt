@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.os.RemoteException
 import com.softbankrobotics.pddlplanning.IPDDLPlannerService.ACTION_SEARCH_PLANS_FROM_PDDL
 import kotlinx.coroutines.CompletableDeferred
 
@@ -30,7 +31,12 @@ suspend fun createPlanSearchFunctionFromService(
     // Starts the connection to the service.
     fun connectToService(serviceConnection: ServiceConnection) = synchronized(lock) {
         nextPlannerService = CompletableDeferred()
-        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        val foundService = context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        if (!foundService) {
+            nextPlannerService.completeExceptionally(
+                RemoteException("Planner service was not found")
+            )
+        }
     }
 
     // Or service connection.
