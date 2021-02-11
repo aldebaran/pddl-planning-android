@@ -149,6 +149,7 @@ fun extractConsequentPredicatesFromExpression(expression: Expression): Set<Eithe
             extractConsequentPredicatesFromExpression(expression.args[1])
         forall_operator_name, exists_operator_name ->
             extractConsequentPredicatesFromExpression(expression.args[1])
+        "" -> return setOf()
         else -> setOf(Either(expression.word))
     }
 }
@@ -165,6 +166,7 @@ fun extractPredicates(expression: Expression): Set<String> {
         imply_operator_name, when_operator_name ->
             extractPredicates(expression.args[0]).plus(extractPredicates(expression.args[1]))
         forall_operator_name, exists_operator_name -> extractPredicates(expression.args[1])
+        "" -> return setOf()
         else -> return setOf(expression.word)
     }
 }
