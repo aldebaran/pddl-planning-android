@@ -12,7 +12,10 @@ interface IPDDLPlannerService {
     const String ACTION_SEARCH_PLANS_FROM_PDDL = "com.softbankrobotics.planning.action.SEARCH_PLANS_FROM_PDDL";
 
     /**
-     * Searches for a plan (a list of tasks) for the given PDDL domain and problem.
+     * Searches for a solution plan for the given PDDL domain and problem.
+     * @throws IllegalArgumentException when the parsing or analysis of the PDDL failed.
+     * @throws UnsupportedOperationException when the planning failed.
+     * @return A list of task that solves the planning problem.
      */
     List<Task> searchPlan(String domain, String problem);
 }

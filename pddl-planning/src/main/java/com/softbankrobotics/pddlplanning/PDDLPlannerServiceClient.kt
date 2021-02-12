@@ -67,12 +67,15 @@ suspend fun createPlanSearchFunctionFromService(
         val start = System.nanoTime()
         try {
             plannerService.searchPlan(domain, problem)
+        } catch (e: IllegalArgumentException) {
+            throw PDDLTranslationException(e.message ?: "unknown error in input PDDL")
+        } catch (e: UnsupportedOperationException) {
+            throw PDDLPlanningException(e.message ?: "unknown error in PDDL planning")
         } finally {
             if (log != null) {
                 val durationMs = (System.nanoTime() - start) / 1_000_000
                 log("Plan search took $durationMs ms")
             }
         }
-
     }
 }
