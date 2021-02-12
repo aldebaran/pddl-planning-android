@@ -17,5 +17,5 @@ interface IPDDLPlannerService {
      * @throws UnsupportedOperationException when the planning failed.
      * @return A list of task that solves the planning problem.
      */
-    @nullable List<Task> searchPlan(String domain, String problem);
+    List<Task> searchPlan(String domain, String problem);
 }
