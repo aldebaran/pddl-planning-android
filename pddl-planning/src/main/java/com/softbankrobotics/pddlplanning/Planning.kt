@@ -2,8 +2,28 @@ package com.softbankrobotics.pddlplanning
 
 import com.softbankrobotics.pddlplanning.utils.*
 
+/**
+ * A function interface to output logs from a planner.
+ */
 typealias LogFunction = (String) -> Unit
+
+/**
+ * Searches for a solution plan for the given PDDL domain and problem.
+ * @throws PDDLTranslationException when the parsing or analysis of the PDDL failed.
+ * @throws PDDLPlanningException when the planning failed.
+ * @return A list of task that solves the planning problem.
+ */
 typealias PlanSearchFunction = suspend (String, String, LogFunction?) -> Tasks
+
+/**
+ * Exception occurring while analyzing a PDDL problem.
+ */
+class PDDLTranslationException(message: String): RuntimeException(message)
+
+/**
+ * Exception occurring as a result of finding a plan to a PDDL problem.
+ */
+class PDDLPlanningException(message: String): RuntimeException(message)
 
 suspend fun adaptProblemAndSearchPlan(
     domain: String,
