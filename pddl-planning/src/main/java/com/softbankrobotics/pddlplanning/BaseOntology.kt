@@ -267,11 +267,6 @@ data class Action(
 typealias Goal = Expression
 typealias Goals = List<Goal>
 
-class NamedGoal(val name: String, val goal: Goal) {
-    override fun toString(): String = goal.toString()
-}
-
-
 /**
  * A task is a fully-determined action to perform.
  * In other words, it is an action plus the instances to use as parameters.
