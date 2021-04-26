@@ -28,7 +28,21 @@ interface PlanningUnitTest {
 
     @Test
     fun scratchDomainUnitTest() {
-        val domain = "(define (domain vms_domain)\n" +
+        val plan = runBlocking { searchPlan(scratchDomain, scratchProblem) { println(it) } }
+        assertNotNull(plan)
+        println("Plan found:\n${plan.joinToString()}")
+        assertTrue(plan.isNotEmpty())
+    }
+
+    @Test
+    fun simpleServiceDomainUnit() {
+        assertTrue(runBlocking {
+            searchPlan(simpleServiceDomain, simpleServiceProblem) { println(it) }
+        }.isEmpty())
+    }
+
+    companion object {
+        const val scratchDomain = "(define (domain vms_domain)\n" +
                 "    \n" +
                 "        (:requirements :adl :negative-preconditions :universal-preconditions)\n" +
                 "    \n" +
@@ -61,7 +75,8 @@ interface PlanningUnitTest {
                 "    :effect (and (knows_intents ?h) (not (wants ?h show_menu))))\n" +
                 "    \n" +
                 "    )"
-        val problem = "(define (problem sandbox_problem)\n" +
+
+        const val scratchProblem = "(define (problem sandbox_problem)\n" +
                 "(:domain vms_domain)\n" +
                 "\n" +
                 "(:requirements :adl :negative-preconditions :universal-preconditions)\n" +
@@ -83,15 +98,8 @@ interface PlanningUnitTest {
                 ")\n" +
                 ")\n" +
                 ")"
-        val plan = runBlocking { searchPlan(domain, problem) { println(it) } }
-        assertNotNull(plan)
-        println("Plan found:\n${plan.joinToString()}")
-        assertTrue(plan.isNotEmpty())
-    }
 
-    @Test
-    fun simpleServiceDomainUnit() {
-        val domain = "(define (domain service_domain)\n" +
+        const val simpleServiceDomain = "(define (domain service_domain)\n" +
                 "    \n" +
                 "        (:requirements :adl :negative-preconditions :universal-preconditions)\n" +
                 "    \n" +
@@ -185,7 +193,7 @@ interface PlanningUnitTest {
                 "    \n" +
                 "    )"
 
-        val problem = "(define (problem service_problem)\n" +
+        const val simpleServiceProblem = "(define (problem service_problem)\n" +
                 "        (:domain service_domain)\n" +
                 "    \n" +
                 "        (:requirements :adl :negative-preconditions :universal-preconditions)\n" +
@@ -204,7 +212,5 @@ interface PlanningUnitTest {
                 "        (imply (not (is_interested user)) (looking_alive))\n" +
                 "        ))\n" +
                 "    )"
-
-        assertTrue(runBlocking { searchPlan(domain, problem) { println(it) } }.isEmpty())
     }
 }
