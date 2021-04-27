@@ -39,7 +39,7 @@ jobs:
       env:
         GITHUB_SUPER_TOKEN: ${{ secrets.GITHUB_SUPER_TOKEN }}
       run: |
-        ./scripts/mirror-actions.sh "$AUTOMATIC_RELEASES_TAG"
+        .github/workflows/mirror-actions.sh "$AUTOMATIC_RELEASES_TAG"
     - uses: "marvinpinto/action-keybase-notifications@latest"
       if: always()
       with:
