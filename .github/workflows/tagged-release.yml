@@ -30,7 +30,7 @@ jobs:
         prerelease: false
         files: |
           LICENSE
-          *.aar
-          *.apk
+          pddl-planning/build/outputs/aar/*.aar
+          pddl-planning-test/build/outputs/aar/*.aar
       id: "automatic_releases"
 
