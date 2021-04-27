@@ -3,7 +3,7 @@ name: "Release from tag"
 on:
   push:
     tags:
-      - "release-*"
+      - "v*"
 
 jobs:
   gh_tagged_release:
