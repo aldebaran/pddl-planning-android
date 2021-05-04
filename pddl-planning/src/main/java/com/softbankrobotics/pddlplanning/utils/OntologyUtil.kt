@@ -1,6 +1,5 @@
 package com.softbankrobotics.pddlplanning.utils
 
-import com.softbankrobotics.pddlplanning.LogFunction
 import com.softbankrobotics.pddlplanning.*
 
 /**
@@ -54,8 +53,11 @@ fun applyParameters(expression: Expression, parameters: Map<Instance, Instance>)
  */
 private fun parseParameter(expression: Expression): Instance {
     val parameterDeclaration = expression.word
-    val matches = Regex("([\\w?]+) - (\\w+)").matchEntire(parameterDeclaration)!!
-    val (name, type) = matches.groupValues.subList(1, matches.groupValues.size)
+    val matches = Regex("([\\w?]+)\\s*?-?\\s*?(\\w+)?").matchEntire(parameterDeclaration)
+        ?: throw RuntimeException("parameter declaration is badly formed: \"$parameterDeclaration\"")
+    val stringMatches = matches.groupValues
+    val name = stringMatches[1]
+    val type = if (stringMatches.size > 2) stringMatches[2] else "object"
     return Instance.create(name, type)
 }
 
