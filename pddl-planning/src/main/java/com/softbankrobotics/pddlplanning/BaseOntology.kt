@@ -139,7 +139,7 @@ open class Instance(override val name: String) : Named, Typed, Expression(name) 
     /** PDDL representation of the declaration of the instance. */
     fun declaration(): String {
         // When type is omitted in PDDL, it already means "object"
-        val typeSpecifier = if (type != Companion.type) " - ${type.name}" else ""
+        val typeSpecifier = if (type != Companion.type) " - ${type.name}" else " - object"
         return "$this$typeSpecifier"
     }
 
