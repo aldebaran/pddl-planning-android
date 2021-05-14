@@ -16,12 +16,21 @@ to allow third-party implementations to be deployed as stand-alone applications.
 
 ## Usage
 
-Build the library and upload it to your maven repository.
-Add your maven repository to your project's `build.gradle` (at the root),
-and then add the following dependency in your module's `build.gradle`:
+This library is publicly available on Maven Central, but **not** in JCenter.
+The `build.gradle` at the root of your project should mention:
 
 ```groovy
-implementation 'com.softbankrobotics:pddl-planning:1.1.3'
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+```
+
+Then add the following dependency in your module's `build.gradle`:
+
+```groovy
+implementation 'com.softbankrobotics.pddl:pddl-planning:1.4.0'
 ```
 
 ## Testing
@@ -32,7 +41,7 @@ It also includes some PDDL tests that you can run with a third-party planner.
 Add the following test dependency in your module's `build.gradle`:
 
 ```groovy
-androidTestImplementation 'com.softbankrobotics:pddl-planning-test:1.1.3'
+androidTestImplementation 'com.softbankrobotics.pddl:pddl-planning-test:1.4.0'
 ```
 
 Then, let a test extend the interface
@@ -42,7 +51,7 @@ to provide the included test units.
 You can also get only the non-instrumented tests by defining the following dependency:
 
 ```groovy
-testImplementation 'com.softbankrobotics:pddl-planning-test:1.1.3'
+testImplementation 'com.softbankrobotics.pddl:pddl-planning-test:1.4.0'
 ```
 
 Then, let a test extend the interface
