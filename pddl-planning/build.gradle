@@ -1,10 +1,10 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'org.jetbrains.dokka'
 }
 
-apply from: "$rootDir/gradle/artifacts.gradle"
-apply from: "$rootDir/gradle/deploy.gradle"
+apply plugin: 'com.vanniktech.maven.publish'
 
 android {
     compileSdkVersion 29

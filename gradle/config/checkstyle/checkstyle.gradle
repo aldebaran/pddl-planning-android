@@ -1,9 +1,0 @@
-apply plugin: 'checkstyle'
-
-tasks.withType(Checkstyle) {
-    reports {
-        xml.enabled true
-        html.enabled true
-        //html.stylesheet resources.text.fromFile('config/xsl/checkstyle-custom.xsl')
-    }
-}
