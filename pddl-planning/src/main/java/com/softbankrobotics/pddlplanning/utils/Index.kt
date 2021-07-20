@@ -44,7 +44,7 @@ class MutableIndex<T>(private val nameOf: (T) -> String) : Index<T> {
     override val size: Int get() = data.size
     override val values: Collection<T> = data.values
     override fun containsKey(key: String): Boolean = data.containsKey(key)
-    override fun containsValue(value: T): Boolean = data.containsValue(value)
+    override fun containsValue(value: T): Boolean = data.any { it.value == value }
     override fun get(key: String): T? = data[key]
     override fun isEmpty(): Boolean = data.isEmpty()
 

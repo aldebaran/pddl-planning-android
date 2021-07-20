@@ -34,7 +34,7 @@ open class Expression(val word: String = "", vararg val args: Expression) : Logi
     }
 
     override fun hashCode(): Int {
-        return word.hashCode() + args.sumBy { it.hashCode() }
+        return word.hashCode() + args.sumOf { it.hashCode() }
     }
 
     override fun toString(): String {
