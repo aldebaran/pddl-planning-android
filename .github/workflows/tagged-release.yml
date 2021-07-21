@@ -20,9 +20,8 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew assembleRelease
-
+    - name: Build & publish with Gradle
+      run: ./gradlew "-PsigningInMemoryKey=${{ secrets.ARTIFACT_SIGNING_KEY }}" "-PsigningInMemoryKeyPassword=${{ secrets.ARTIFACT_SIGNING_PASSWORD }}" publish --stacktrace
 
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
