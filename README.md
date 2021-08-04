@@ -1,6 +1,7 @@
 # PDDL Planning for Android
 
 ![](https://img.shields.io/maven-central/v/com.softbankrobotics.pddl/pddl-planning "latest version on Maven Central")
+![](https://img.shields.io/github/workflow/status/aldebaran/pddl-planning-android/continuous-tests.yml/master "master build state")
 
 This project provides a library to interface third-party PDDL planners on Android.
 
