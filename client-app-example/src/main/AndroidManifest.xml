@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.softbankrobotics.pddlplanning.example.client">
+
+    <!-- To be allowed to bind the planner service -->
+    <uses-permission android:name="com.softbankrobotics.planning.SEARCH_PLANS" />
+
+    <!-- To see the planner service -->
+    <queries>
+        <package android:name="com.commonsware.android.r.embed.server" />
+        <intent>
+            <action android:name="com.softbankrobotics.planning.action.SEARCH_PLANS_FROM_PDDL" />
+        </intent>
+        <package android:name="com.softbankrobotics.pddlplanning.example.service" />
+    </queries>
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Planning">
+        <activity
+            android:name=".ExampleClientActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

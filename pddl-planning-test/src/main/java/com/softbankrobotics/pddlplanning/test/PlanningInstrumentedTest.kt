@@ -2,7 +2,6 @@ package com.softbankrobotics.pddlplanning.test
 
 import android.content.Context
 import android.util.Log
-import com.example.pddl_planning_test.R
 import com.softbankrobotics.pddlplanning.Expression
 import com.softbankrobotics.pddlplanning.Task
 import com.softbankrobotics.pddlplanning.Tasks

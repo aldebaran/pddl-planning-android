@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.softbankrobotics.pddlplanning.example.service">
+
+    <!-- Declares a permission, later used byt the planner service. -->
+    <permission
+        android:name="com.softbankrobotics.planning.SEARCH_PLANS"
+        android:protectionLevel="normal" />
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Planning">
+        <activity
+            android:name=".ExampleInAppClientActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".ExamplePDDLPlannerService"
+            android:exported="true"
+            android:permission="com.softbankrobotics.planning.SEARCH_PLANS">
+            <intent-filter>
+                <action android:name="com.softbankrobotics.planning.action.SEARCH_PLANS_FROM_PDDL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
